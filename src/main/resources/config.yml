@@ -1,1 +1,10 @@
-commandWhitelist: ["/l", "/login"]
+# 未登录玩家可以执行的命令
+unAuthedCommandWhitelist: ["/l", "/login"]
+
+# 允许未登录玩家聊天
+# 默认值：false
+unAuthedChat: false
+
+# 允许未登录玩家移动
+# 默认值：false
+unAuthedMovement: false

@@ -17,7 +17,7 @@ public class LoginCommand implements TabExecutor {
         }
 
         Player player = (Player) sender;
-        LoginManager.addLogged(player.getName());
+        LoginManager.addAuthed(player.getName());
         return true;
     }
 

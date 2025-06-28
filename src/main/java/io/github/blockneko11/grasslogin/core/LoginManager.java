@@ -4,19 +4,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public final class LoginManager {
-    private static final List<String> loggedPlayers = new ArrayList<>();
+    private static final List<String> authedPlayers = new ArrayList<>();
 
-    public static boolean isLogged(String playerName) {
-        return loggedPlayers.contains(playerName.toLowerCase());
+    public static boolean isAuthed(String playerName) {
+        return authedPlayers.contains(playerName.toLowerCase());
     }
 
-    public static void addLogged(String playerName) {
-        if (!isLogged(playerName)) {
-            loggedPlayers.add(playerName.toLowerCase());
+    public static void addAuthed(String playerName) {
+        if (!isAuthed(playerName)) {
+            authedPlayers.add(playerName.toLowerCase());
         }
     }
 
-    public static void removeLogged(String playerName) {
-        loggedPlayers.remove(playerName.toLowerCase());
+    public static void removeAuthed(String playerName) {
+        authedPlayers.remove(playerName.toLowerCase());
     }
 }

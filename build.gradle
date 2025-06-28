@@ -27,12 +27,15 @@ repositories {
 
 dependencies {
     compileOnly "org.spigotmc:spigot-api:1.13-R0.1-SNAPSHOT"
+
+    compileOnly "mysql:mysql-connector-java:8.0.33"
+    // compileOnly "org.xerial:sqlite-jdbc:3.50.1.0"
+
     compileOnly "org.jetbrains:annotations:26.0.2"
     annotationProcessor(compileOnly("org.projectlombok:lombok:1.18.36"))
 
     testImplementation platform('org.junit:junit-bom:5.11.4')
     testImplementation 'org.junit.jupiter:junit-jupiter'
-    testAnnotationProcessor(testCompileOnly("org.projectlombok:lombok:1.18.36"))
 }
 
 test {

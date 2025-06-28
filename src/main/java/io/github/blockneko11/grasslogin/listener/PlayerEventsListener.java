@@ -31,7 +31,7 @@ public class PlayerEventsListener implements Listener {
 
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent e) {
-        LoginManager.removeLogged(e.getPlayer().getName());
+        LoginManager.removeAuthed(e.getPlayer().getName());
     }
 
     // chat & command
@@ -39,8 +39,12 @@ public class PlayerEventsListener implements Listener {
     @EventHandler
     public void onPlayerChat(AsyncPlayerChatEvent e) {
         String playerName = e.getPlayer().getName();
-        if (LoginManager.isLogged(playerName)) {
+        if (LoginManager.isAuthed(playerName)) {
            return;
+        }
+
+        if (GrassLoginPlugin.getPluginConfig().getBoolean("unAuthedChat")) {
+            return;
         }
 
         e.setCancelled(true);
@@ -49,12 +53,13 @@ public class PlayerEventsListener implements Listener {
     @EventHandler
     public void onPlayerCommand(PlayerCommandPreprocessEvent e) {
         String playerName = e.getPlayer().getName();
-        if (LoginManager.isLogged(playerName)) {
+        if (LoginManager.isAuthed(playerName)) {
             return;
         }
 
         String command = e.getMessage().toLowerCase().split(" ")[0];
-        List<String> commandWhitelist = (List<String>) GrassLoginPlugin.getPluginConfig().getList("commandWhitelist");
+
+        List<String> commandWhitelist = (List<String>) GrassLoginPlugin.getPluginConfig().getList("unAuthedCommandWhitelist");
         if (commandWhitelist.contains(command)) {
             return;
         }
@@ -67,7 +72,11 @@ public class PlayerEventsListener implements Listener {
     @EventHandler
     public void onPlayerMove(PlayerMoveEvent e) {
         String playerName = e.getPlayer().getName();
-        if (LoginManager.isLogged(playerName)) {
+        if (LoginManager.isAuthed(playerName)) {
+            return;
+        }
+
+        if (GrassLoginPlugin.getPluginConfig().getBoolean("unAuthedMovement")) {
             return;
         }
 
@@ -86,7 +95,7 @@ public class PlayerEventsListener implements Listener {
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent e) {
         String playerName = e.getPlayer().getName();
-        if (LoginManager.isLogged(playerName)) {
+        if (LoginManager.isAuthed(playerName)) {
             return;
         }
 
@@ -96,7 +105,7 @@ public class PlayerEventsListener implements Listener {
     @EventHandler
     public void onPlayerInteractEntity(PlayerInteractEntityEvent e) {
         String playerName = e.getPlayer().getName();
-        if (LoginManager.isLogged(playerName)) {
+        if (LoginManager.isAuthed(playerName)) {
             return;
         }
 
@@ -106,7 +115,7 @@ public class PlayerEventsListener implements Listener {
     @EventHandler
     public void onPlayerInteractAtEntity(PlayerInteractAtEntityEvent e) {
         String playerName = e.getPlayer().getName();
-        if (LoginManager.isLogged(playerName)) {
+        if (LoginManager.isAuthed(playerName)) {
             return;
         }
 
@@ -116,7 +125,7 @@ public class PlayerEventsListener implements Listener {
     @EventHandler
     public void onPlayerDropItem(PlayerDropItemEvent e) {
         String playerName = e.getPlayer().getName();
-        if (LoginManager.isLogged(playerName)) {
+        if (LoginManager.isAuthed(playerName)) {
             return;
         }
 
@@ -131,7 +140,7 @@ public class PlayerEventsListener implements Listener {
         }
 
         String playerName = entity.getName();
-        if (LoginManager.isLogged(playerName)) {
+        if (LoginManager.isAuthed(playerName)) {
             return;
         }
 
@@ -146,7 +155,7 @@ public class PlayerEventsListener implements Listener {
         }
 
         String playerName = entity.getName();
-        if (LoginManager.isLogged(playerName)) {
+        if (LoginManager.isAuthed(playerName)) {
             return;
         }
 
@@ -161,7 +170,7 @@ public class PlayerEventsListener implements Listener {
         }
 
         String playerName = entity.getName();
-        if (LoginManager.isLogged(playerName)) {
+        if (LoginManager.isAuthed(playerName)) {
             return;
         }
 
@@ -176,7 +185,7 @@ public class PlayerEventsListener implements Listener {
         }
 
         String playerName = entity.getName();
-        if (LoginManager.isLogged(playerName)) {
+        if (LoginManager.isAuthed(playerName)) {
             return;
         }
 
@@ -191,7 +200,7 @@ public class PlayerEventsListener implements Listener {
         }
 
         String playerName = entity.getName();
-        if (LoginManager.isLogged(playerName)) {
+        if (LoginManager.isAuthed(playerName)) {
             return;
         }
 
@@ -201,7 +210,7 @@ public class PlayerEventsListener implements Listener {
     @EventHandler
     public void onPlayerTeleport(PlayerTeleportEvent e) {
         String playerName = e.getPlayer().getName();
-        if (LoginManager.isLogged(playerName)) {
+        if (LoginManager.isAuthed(playerName)) {
             return;
         }
 
