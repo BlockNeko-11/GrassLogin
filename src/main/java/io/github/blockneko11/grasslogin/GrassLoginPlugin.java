@@ -1,5 +1,6 @@
 package io.github.blockneko11.grasslogin;
 
+import io.github.blockneko11.grasslogin.command.GrassLoginCommand;
 import io.github.blockneko11.grasslogin.command.LoginCommand;
 import io.github.blockneko11.grasslogin.listener.PlayerEventsListener;
 import lombok.Getter;
@@ -26,6 +27,9 @@ public final class GrassLoginPlugin extends JavaPlugin {
 
         getServer().getPluginManager().registerEvents(new PlayerEventsListener(), this);
 
+        getCommand("grasslogin").setExecutor(new GrassLoginCommand());
+        getCommand("grasslogin").setTabCompleter(new GrassLoginCommand());
+
         getCommand("login").setExecutor(new LoginCommand());
 
         log.info("GrassLogin plugin enabled!");
@@ -40,4 +44,11 @@ public final class GrassLoginPlugin extends JavaPlugin {
         instance = null;
         log = null;
     }
+
+//    public void reload() {
+//        saveConfig();
+//        reloadConfig();
+//
+//        log.info("GrassLogin plugin reloaded!");
+//    }
 }
