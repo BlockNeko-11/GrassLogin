@@ -18,7 +18,7 @@ import org.bukkit.event.player.*;
 
 import java.util.List;
 
-public class PlayerEventsListener implements Listener {
+public final class PlayerEventsListener implements Listener {
     // join & quit
 
     @EventHandler
@@ -201,6 +201,10 @@ public class PlayerEventsListener implements Listener {
 
         String playerName = entity.getName();
         if (LoginManager.isAuthed(playerName)) {
+            return;
+        }
+
+        if (GrassLoginPlugin.getPluginConfig().getBoolean("unAuthedHurt")) {
             return;
         }
 

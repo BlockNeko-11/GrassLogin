@@ -8,3 +8,7 @@ unAuthedChat: false
 # 允许未登录玩家移动
 # 默认值：false
 unAuthedMovement: false
+
+# 允许未登录玩家受到攻击
+# 默认值：false
+unAuthedNoHurt: false
