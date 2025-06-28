@@ -197,4 +197,14 @@ public class PlayerEventsListener implements Listener {
 
         e.setCancelled(true);
     }
+
+    @EventHandler
+    public void onPlayerTeleport(PlayerTeleportEvent e) {
+        String playerName = e.getPlayer().getName();
+        if (LoginManager.isLogged(playerName)) {
+            return;
+        }
+
+        e.setCancelled(true);
+    }
 }
