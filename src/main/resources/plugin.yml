@@ -1,0 +1,10 @@
+name: GrassLogin
+main: io.github.blockneko11.grasslogin.GrassLoginPlugin
+version: "${version}"
+author: BlockNeko-11
+
+commands:
+  login:
+    aliases:
+      - l
+    permission: grasslogin.command.login
