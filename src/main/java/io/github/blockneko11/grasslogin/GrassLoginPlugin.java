@@ -2,6 +2,7 @@ package io.github.blockneko11.grasslogin;
 
 import io.github.blockneko11.grasslogin.command.GrassLoginCommand;
 import io.github.blockneko11.grasslogin.command.LoginCommand;
+import io.github.blockneko11.grasslogin.command.RegisterCommand;
 import io.github.blockneko11.grasslogin.listener.PlayerEventsListener;
 import lombok.Getter;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -31,6 +32,9 @@ public final class GrassLoginPlugin extends JavaPlugin {
         getCommand("grasslogin").setTabCompleter(new GrassLoginCommand());
 
         getCommand("login").setExecutor(new LoginCommand());
+        getCommand("login").setTabCompleter(new LoginCommand());
+        getCommand("register").setExecutor(new RegisterCommand());
+        getCommand("register").setTabCompleter(new RegisterCommand());
 
         log.info("GrassLogin plugin enabled!");
     }

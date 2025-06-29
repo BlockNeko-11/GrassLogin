@@ -3,7 +3,7 @@ package io.github.blockneko11.grasslogin.core;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class LoginManager {
+public final class AuthManager {
     private static final List<String> authedPlayers = new ArrayList<>();
 
     public static boolean isAuthed(String playerName) {

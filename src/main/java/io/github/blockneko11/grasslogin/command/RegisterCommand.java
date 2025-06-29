@@ -1,12 +1,10 @@
 package io.github.blockneko11.grasslogin.command;
 
-import io.github.blockneko11.grasslogin.core.AuthManager;
 import org.bukkit.entity.Player;
 
-public final class LoginCommand implements PlayerCommandExecutor {
+public final class RegisterCommand implements PlayerCommandExecutor {
     @Override
     public boolean onCommand(Player player, String[] args) {
-        AuthManager.addAuthed(player.getName());
         return true;
     }
 }

@@ -13,3 +13,7 @@ commands:
     aliases:
       - l
     permission: grasslogin.command.login
+  register:
+    aliases:
+      - reg
+    permission: grasslogin.command.register
