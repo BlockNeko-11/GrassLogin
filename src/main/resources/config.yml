@@ -1,7 +1,7 @@
 # 未登录玩家行为配置
 unAuthed:
   # 未登录玩家可以执行的命令
-  commandWhitelist: ["/l", "/login"]
+  commandWhitelist: ["/l", "/login", "/reg", "/register"]
 
   # 允许未登录玩家聊天
   # 默认值：false
