@@ -11,6 +11,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitScheduler;
 
 import java.sql.SQLException;
+import java.util.Objects;
 import java.util.logging.Logger;
 
 public final class GrassLoginPlugin extends JavaPlugin {
@@ -33,6 +34,13 @@ public final class GrassLoginPlugin extends JavaPlugin {
         saveDefaultConfig();
         pluginConfig = getConfig();
 
+        if (!Objects.equals(pluginConfig.getString("version"), getDescription().getVersion())) {
+            log.severe("GrassLogin 插件版本与配置文件的版本不匹配！");
+            log.severe("GrassLogin 插件将禁用。");
+            getServer().getPluginManager().disablePlugin(this);
+            return;
+        }
+
         getServer().getPluginManager().registerEvents(new PlayerEventsListener(), this);
 
         getCommand("grasslogin").setExecutor(new GrassLoginCommand());
@@ -52,6 +60,7 @@ public final class GrassLoginPlugin extends JavaPlugin {
             log.severe("数据库连接失败：" + e);
             log.severe("GrassLogin 插件将禁用。");
             getServer().getPluginManager().disablePlugin(this);
+            return;
         }
 
         try {
