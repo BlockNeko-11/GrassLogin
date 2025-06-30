@@ -90,6 +90,10 @@ tasks.withType(Test).configureEach { tsk ->
     tsk.systemProperty "file.encoding", "UTF-8"
 }
 
+jar {
+    from("LICENSE")
+}
+
 compileJava.dependsOn clean
 
 publishing {
