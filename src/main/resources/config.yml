@@ -1,1 +1,57 @@
-commandWhitelist: ["/l", "/login"]
+# 未登录玩家行为配置
+unAuthed:
+  # 未登录玩家可以执行的命令
+  commandWhitelist: ["/l", "/login", "/reg", "/register"]
+
+  # 允许未登录玩家聊天
+  # 默认值：false
+  # 可选项：true, false
+  allowChat: false
+
+  # 允许未登录玩家移动
+  # 默认值：false
+  # 可选项：true, false
+  allowMovement: false
+
+  # 允许未登录玩家受到攻击
+  # 默认值：false
+  # 可选项：true, false
+  noHurt: false
+
+# 数据库配置
+database:
+  # 数据库类型
+  # 默认值：mysql
+  # 可选项：mysql, sqlite
+  type: mysql
+
+  # MySQL 数据库配置
+  mysql:
+    # 数据库地址（数据库在本地时请勿更改）
+    host: localhost
+
+    # 数据库端口
+    port: 3306
+
+    # 数据库名称
+    database: grasslogin
+
+    # 数据库用户名
+    username: root
+
+    # 数据库密码
+    password: ""
+
+  # SQLite 数据库配置
+  sqlite:
+    # 数据库文件路径
+    path: grasslogin.db
+
+# 密码加密
+encrypt:
+  # 密码加密方法
+  # 修改后玩家无法登录，需要先删除数据库表，然后让玩家重新注册！！！
+  # 最好不要修改！！！
+  # 默认值：SHA-512
+  # 可选项：SHA-1, SHA-256, SHA-512, MD5
+  method: SHA-512

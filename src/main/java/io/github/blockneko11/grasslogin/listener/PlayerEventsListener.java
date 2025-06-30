@@ -1,7 +1,7 @@
 package io.github.blockneko11.grasslogin.listener;
 
 import io.github.blockneko11.grasslogin.GrassLoginPlugin;
-import io.github.blockneko11.grasslogin.core.LoginManager;
+import io.github.blockneko11.grasslogin.core.AuthManager;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.HumanEntity;
@@ -18,7 +18,7 @@ import org.bukkit.event.player.*;
 
 import java.util.List;
 
-public class PlayerEventsListener implements Listener {
+public final class PlayerEventsListener implements Listener {
     // join & quit
 
     @EventHandler
@@ -31,7 +31,7 @@ public class PlayerEventsListener implements Listener {
 
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent e) {
-        LoginManager.removeLogged(e.getPlayer().getName());
+        AuthManager.removeAuthed(e.getPlayer().getName());
     }
 
     // chat & command
@@ -39,8 +39,12 @@ public class PlayerEventsListener implements Listener {
     @EventHandler
     public void onPlayerChat(AsyncPlayerChatEvent e) {
         String playerName = e.getPlayer().getName();
-        if (LoginManager.isLogged(playerName)) {
+        if (AuthManager.isAuthed(playerName)) {
            return;
+        }
+
+        if (GrassLoginPlugin.getPluginConfig().getBoolean("unAuthed.allowChat")) {
+            return;
         }
 
         e.setCancelled(true);
@@ -49,12 +53,13 @@ public class PlayerEventsListener implements Listener {
     @EventHandler
     public void onPlayerCommand(PlayerCommandPreprocessEvent e) {
         String playerName = e.getPlayer().getName();
-        if (LoginManager.isLogged(playerName)) {
+        if (AuthManager.isAuthed(playerName)) {
             return;
         }
 
         String command = e.getMessage().toLowerCase().split(" ")[0];
-        List<String> commandWhitelist = (List<String>) GrassLoginPlugin.getPluginConfig().getList("commandWhitelist");
+
+        List<String> commandWhitelist = (List<String>) GrassLoginPlugin.getPluginConfig().getList("unAuthed.commandWhitelist");
         if (commandWhitelist.contains(command)) {
             return;
         }
@@ -67,7 +72,11 @@ public class PlayerEventsListener implements Listener {
     @EventHandler
     public void onPlayerMove(PlayerMoveEvent e) {
         String playerName = e.getPlayer().getName();
-        if (LoginManager.isLogged(playerName)) {
+        if (AuthManager.isAuthed(playerName)) {
+            return;
+        }
+
+        if (GrassLoginPlugin.getPluginConfig().getBoolean("unAuthed.allowMovement")) {
             return;
         }
 
@@ -86,7 +95,7 @@ public class PlayerEventsListener implements Listener {
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent e) {
         String playerName = e.getPlayer().getName();
-        if (LoginManager.isLogged(playerName)) {
+        if (AuthManager.isAuthed(playerName)) {
             return;
         }
 
@@ -96,7 +105,7 @@ public class PlayerEventsListener implements Listener {
     @EventHandler
     public void onPlayerInteractEntity(PlayerInteractEntityEvent e) {
         String playerName = e.getPlayer().getName();
-        if (LoginManager.isLogged(playerName)) {
+        if (AuthManager.isAuthed(playerName)) {
             return;
         }
 
@@ -106,7 +115,7 @@ public class PlayerEventsListener implements Listener {
     @EventHandler
     public void onPlayerInteractAtEntity(PlayerInteractAtEntityEvent e) {
         String playerName = e.getPlayer().getName();
-        if (LoginManager.isLogged(playerName)) {
+        if (AuthManager.isAuthed(playerName)) {
             return;
         }
 
@@ -116,7 +125,7 @@ public class PlayerEventsListener implements Listener {
     @EventHandler
     public void onPlayerDropItem(PlayerDropItemEvent e) {
         String playerName = e.getPlayer().getName();
-        if (LoginManager.isLogged(playerName)) {
+        if (AuthManager.isAuthed(playerName)) {
             return;
         }
 
@@ -131,7 +140,7 @@ public class PlayerEventsListener implements Listener {
         }
 
         String playerName = entity.getName();
-        if (LoginManager.isLogged(playerName)) {
+        if (AuthManager.isAuthed(playerName)) {
             return;
         }
 
@@ -146,7 +155,7 @@ public class PlayerEventsListener implements Listener {
         }
 
         String playerName = entity.getName();
-        if (LoginManager.isLogged(playerName)) {
+        if (AuthManager.isAuthed(playerName)) {
             return;
         }
 
@@ -161,7 +170,7 @@ public class PlayerEventsListener implements Listener {
         }
 
         String playerName = entity.getName();
-        if (LoginManager.isLogged(playerName)) {
+        if (AuthManager.isAuthed(playerName)) {
             return;
         }
 
@@ -176,7 +185,7 @@ public class PlayerEventsListener implements Listener {
         }
 
         String playerName = entity.getName();
-        if (LoginManager.isLogged(playerName)) {
+        if (AuthManager.isAuthed(playerName)) {
             return;
         }
 
@@ -191,7 +200,21 @@ public class PlayerEventsListener implements Listener {
         }
 
         String playerName = entity.getName();
-        if (LoginManager.isLogged(playerName)) {
+        if (AuthManager.isAuthed(playerName)) {
+            return;
+        }
+
+        if (GrassLoginPlugin.getPluginConfig().getBoolean("unAuthed.noHurt")) {
+            return;
+        }
+
+        e.setCancelled(true);
+    }
+
+    @EventHandler
+    public void onPlayerTeleport(PlayerTeleportEvent e) {
+        String playerName = e.getPlayer().getName();
+        if (AuthManager.isAuthed(playerName)) {
             return;
         }
 

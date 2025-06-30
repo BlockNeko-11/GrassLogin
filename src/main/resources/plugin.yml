@@ -2,9 +2,18 @@ name: GrassLogin
 main: io.github.blockneko11.grasslogin.GrassLoginPlugin
 version: "${version}"
 author: BlockNeko-11
+api-version: 1.13
 
 commands:
+  grasslogin:
+    aliases:
+      - gl
+    permission: grasslogin.command.grasslogin
   login:
     aliases:
       - l
     permission: grasslogin.command.login
+  register:
+    aliases:
+      - reg
+    permission: grasslogin.command.register
