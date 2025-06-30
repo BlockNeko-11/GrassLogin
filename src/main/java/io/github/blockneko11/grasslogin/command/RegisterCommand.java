@@ -43,14 +43,31 @@ public final class RegisterCommand implements PlayerCommandExecutor {
 
         GrassLoginPlugin.getScheduler().runTaskAsynchronously(GrassLoginPlugin.getInstance(), () -> {
             try {
+                String name = player.getName();
+
+                if (GrassLoginPlugin.getPluginConfig().getBoolean("encrypt.username", false)) {
+                    name = CryptUtil.encrypt(name);
+
+                    if (name == null) {
+                        if (GrassLoginPlugin.getPluginConfig().getBoolean("encrypt.usernameFallback", true)) {
+                            name = player.getName();
+                        } else {
+                            player.sendMessage("§c注册失败，请询问腐竹！");
+                            GrassLoginPlugin.getLog().severe("玩家 " + player.getName() + " 注册失败：用户名加密失败");
+                            return;
+                        }
+                    }
+                }
+
                 String pwd = CryptUtil.encrypt(args[0]);
 
                 if (pwd == null) {
-                    player.sendMessage("§c密码加密失败！");
+                    player.sendMessage("§c注册失败，请询问腐竹！");
+                    GrassLoginPlugin.getLog().severe("玩家 " + player.getName() + " 注册失败：密码加密失败");
                     return;
                 }
 
-                PlayerAuthData data = new PlayerAuthData(player.getName(), pwd);
+                PlayerAuthData data = new PlayerAuthData(name, pwd);
                 GrassLoginPlugin.getSql().insert(data);
                 AuthManager.addAuthed(player.getName());
                 player.sendMessage("§a注册成功！");

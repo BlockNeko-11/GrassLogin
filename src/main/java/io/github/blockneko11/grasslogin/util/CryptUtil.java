@@ -10,7 +10,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.List;
 
-public class CryptUtil {
+public final class CryptUtil {
     private static final List<String> methods = Arrays.asList("MD5", "SHA-1", "SHA-256", "SHA-512");
 
     @Nullable
