@@ -1,5 +1,6 @@
 package io.github.blockneko11.grasslogin.command;
 
+import io.github.blockneko11.grasslogin.util.Translation;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
@@ -14,7 +15,7 @@ public interface PlayerCommandExecutor extends TabExecutor {
     @Override
     default boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!(sender instanceof Player)) {
-            sender.sendMessage("Consol 也想当一回 Player¿");
+            sender.sendMessage(Translation.tr("command.only_player_can_use"));
             return false;
         }
 

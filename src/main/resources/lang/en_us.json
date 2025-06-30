@@ -1,0 +1,42 @@
+{
+  "plugin.enabled": "GrassLogin plugin was enabled!",
+  "plugin.disabled": "GrassLogin plugin was disabled!",
+  "plugin.reloaded": "GrassLogin plugin was reloaded!",
+  "error.process.disable": "GrassLogin will be disabled.",
+  "config.version_mismatch": "The version of config.yml doesn't match with GrassLogin plugin's version",
+  "database.connect_failed": "Failed to connect to database: {}",
+  "database.init_failed": "Failed to initialize database: {}",
+
+  "command.only_player_can_use": "Hey, are u a player¿",
+
+  "command.grasslogin.help.header": "GrassLogin plugin help: ",
+  "command.grasslogin.help.0": "&e/grasslogin help &7- Show this message.",
+  "command.grasslogin.help.1": "&e/grasslogin reload &7- Reload GrassLogin plugin.",
+  "command.grasslogin.help.2": "&e/reg(ister) <password> <repeat the password> &7- Register your account.",
+  "command.grasslogin.help.3": "&e/l(ogin) <password> &7- Login your account.",
+  "command.grasslogin.help.ending": "&eFor more help information, please visit the repository of GrassLogin plugin: https://github.com/BlockNeko-11/GrassLogin",
+  "command.grasslogin.reload": "&aGrassLogin plugin was reloaded!",
+  "command.grasslogin.version": "&aGrassLogin plugin version: {}",
+
+  "command.login.success": "&aLogin success!",
+  "command.login.success_log": "Player {} succeeded to login!",
+  "command.login.already_authed": "&cYou have already authed!",
+  "command.login.no_password": "&cPlease enter the password!",
+  "command.login.not_registered": "&cYou haven't registered yet!",
+  "command.login.wrong_password": "&cWrong password!",
+  "command.login.internal_error": "&cFailed to login, please ask the server owner and admins.",
+  "command.login.internal_error_log": "Player {} failed to login: {}",
+  "command.login.tab_complete.password": "<password>",
+
+  "command.register.success": "&aRegister success!",
+  "command.register.success_log": "Player {} succeeded to register!",
+  "command.register.already_registered": "&cYou have already registered!",
+  "command.register.no_password": "&cPlease enter the password!",
+  "command.register.not_repeat_password": "&cPlease repeat the password!",
+  "command.register.password_not_match": "&cTwo passwords are not same!",
+  "command.register.processing": "&eRegistering...",
+  "command.register.internal_error": "&cFailed to register, please ask the server owner and admins.",
+  "command.register.internal_error_log": "Player {} failed to register: {}",
+  "command.register.tab_complete.password": "<password> <repeat the password>",
+  "command.register.tab_complete.repeat_password": "<repeat the password>"
+}

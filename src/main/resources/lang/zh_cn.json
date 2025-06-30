@@ -1,0 +1,42 @@
+{
+  "plugin.enabled": "GrassLogin 插件启用成功！",
+  "plugin.disabled": "GrassLogin 插件禁用成功！",
+  "plugin.reloaded": "GrassLogin 插件重载完成！",
+  "error.process.disable": "GrassLogin 插件将禁用。",
+  "config.version_mismatch": "GrassLogin 插件版本与配置文件的版本不匹配！",
+  "database.connect_failed": "数据库连接失败：{}",
+  "database.init_failed": "数据库初始化失败：{}",
+
+  "command.only_player_can_use": "Consol 也想当一回 Player¿",
+
+  "command.grasslogin.help.header": "GrassLogin 插件帮助：",
+  "command.grasslogin.help.0": "&e/grasslogin help &7- 显示本信息",
+  "command.grasslogin.help.1": "&e/grasslogin reload &7- 重载 GrassLogin 插件",
+  "command.grasslogin.help.2": "&e/reg(ister) <密码> <重复密码> &7- 注册",
+  "command.grasslogin.help.3": "&e/l(ogin) <密码> &7- 登录",
+  "command.grasslogin.help.ending": "&e更多帮助信息请查看插件仓库：https://github.com/BlockNeko-11/GrassLogin",
+  "command.grasslogin.reload": "&aGrassLogin 插件重载完成！",
+  "command.grasslogin.version": "&aGrassLogin 插件版本：{}",
+
+  "command.login.success": "&a登录成功！",
+  "command.login.success_log": "玩家 {} 登录成功！",
+  "command.login.already_authed": "&c你已经登录了！",
+  "command.login.no_password": "&c请输入密码！",
+  "command.login.not_registered": "&c你还未注册呢！",
+  "command.login.wrong_password": "&c密码错误！",
+  "command.login.internal_error": "&c登录失败，请询问腐竹！",
+  "command.login.internal_error_log": "玩家 {} 登录失败：{}",
+  "command.login.tab_complete.password": "<密码>",
+
+  "command.register.success": "&a注册成功！",
+  "command.register.success_log": "玩家 {} 注册成功！",
+  "command.register.already_registered": "&c你已经注册了！",
+  "command.register.no_password": "&c请输入密码！",
+  "command.register.not_repeat_password": "&c请再次输入密码！",
+  "command.register.password_not_match": "&c两次输入的密码不一致！",
+  "command.register.processing": "&e注册中...",
+  "command.register.internal_error": "&c注册失败，请询问腐竹！",
+  "command.register.internal_error_log": "玩家 {} 注册失败：{}",
+  "command.register.tab_complete.password": "<密码> <重复密码>",
+  "command.register.tab_complete.repeat_password": "<重复密码>"
+}

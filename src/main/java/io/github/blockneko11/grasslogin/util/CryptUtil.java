@@ -16,7 +16,7 @@ public final class CryptUtil {
     @Nullable
     public static String encrypt(String str) {
         try {
-            MessageDigest digest = MessageDigest.getInstance(GrassLoginPlugin.getPluginConfig().getString("encrypt.method", "SHA-512"));
+            MessageDigest digest = MessageDigest.getInstance(GrassLoginPlugin.getPluginConfig().getString("encryption.method", "SHA-512"));
             byte[] hash = digest.digest(str.getBytes(StandardCharsets.UTF_8));
             return Hex.encodeHexString(hash);
         } catch (NoSuchAlgorithmException e) {

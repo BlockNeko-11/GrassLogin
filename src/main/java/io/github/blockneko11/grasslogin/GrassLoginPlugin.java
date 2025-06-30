@@ -5,6 +5,7 @@ import io.github.blockneko11.grasslogin.command.LoginCommand;
 import io.github.blockneko11.grasslogin.command.RegisterCommand;
 import io.github.blockneko11.grasslogin.database.SQL;
 import io.github.blockneko11.grasslogin.listener.PlayerEventsListener;
+import io.github.blockneko11.grasslogin.util.Translation;
 import lombok.Getter;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -33,9 +34,11 @@ public final class GrassLoginPlugin extends JavaPlugin {
         saveDefaultConfig();
         pluginConfig = getConfig();
 
+        Translation.load();
+
         if (!pluginConfig.getString("version", "").equalsIgnoreCase(getDescription().getVersion())) {
-            log.severe("GrassLogin 插件版本与配置文件的版本不匹配！");
-            log.severe("GrassLogin 插件将禁用。");
+            log.severe(Translation.tr("config.version_mismatch"));
+            log.severe(Translation.tr("error.process.disable"));
             getServer().getPluginManager().disablePlugin(this);
             return;
         }
@@ -56,20 +59,21 @@ public final class GrassLoginPlugin extends JavaPlugin {
             return;
         }
 
-        log.info("GrassLogin 插件启用成功！");
+        log.info(Translation.tr("plugin.enabled"));
     }
 
     @Override
     public void onDisable() {
         saveConfig();
 
-        log.info("GrassLogin 插件禁用成功！");
+        log.info(Translation.tr("plugin.disabled"));
 
         instance = null;
         log = null;
         pluginConfig = null;
         scheduler = null;
         sql = null;
+        Translation.shutdown();
     }
 
     private boolean connectDB() {
@@ -78,8 +82,8 @@ public final class GrassLoginPlugin extends JavaPlugin {
         try {
             sql.initializeDB();
         } catch (SQLException e) {
-            log.severe("数据库连接失败：" + e);
-            log.severe("GrassLogin 插件将禁用。");
+            log.severe(Translation.tr("database.connect_failed", e));
+            log.severe(Translation.tr("error.process.disable"));
             getServer().getPluginManager().disablePlugin(this);
             return false;
         }
@@ -87,8 +91,8 @@ public final class GrassLoginPlugin extends JavaPlugin {
         try {
             sql.createTable();
         } catch (SQLException e) {
-            log.severe("数据库表创建失败：" + e);
-            log.severe("GrassLogin 插件将禁用。");
+            log.severe(Translation.tr("database.init_failed", e));
+            log.severe(Translation.tr("error.process.disable"));
             getServer().getPluginManager().disablePlugin(this);
             return false;
         }
@@ -104,6 +108,6 @@ public final class GrassLoginPlugin extends JavaPlugin {
             return;
         }
 
-        log.info("GrassLogin 插件配置文件重载完成！");
+        log.info(Translation.tr("plugin.reloaded"));
     }
 }

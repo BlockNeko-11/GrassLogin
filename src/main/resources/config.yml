@@ -1,73 +1,84 @@
-# 本配置文件对应的 GrassLogin 插件版本
-# 当版本不匹配时，插件将不会启动。
+# GrassLogin plugin config file
+# For more information, please visit the repository of GrassLogin plugin: https://github.com/BlockNeko-11/GrassLogin.
+
+# The config version, which should be the same as the plugin version.
+# When the version does not match, the plugin will not be enabled.
 version: "${version}"
 
-# 未登录玩家行为配置
+# Unauthenticated players' behaviour config
 unAuthed:
-  # 未登录玩家可以执行的命令
+  # The commands that can be executed by unauthenticated players.
+  # Note 1: Command aliases are supported.
+  # Note 2: Every command here should start with a slash.
   commandWhitelist: ["/l", "/login", "/reg", "/register"]
 
-  # 允许未登录玩家聊天
-  # 默认值：false
-  # 可选项：true, false
+  # Allow unauthenticated players to chat.
+  # Default: false
+  # Options: true, false
   allowChat: false
 
-  # 允许未登录玩家移动
-  # 默认值：false
-  # 可选项：true, false
+  # Allow unauthenticated players to move.
+  # Default: false
+  # Options: true, false
   allowMovement: false
 
-  # 允许未登录玩家受到攻击
-  # 默认值：false
-  # 可选项：true, false
+  # Allow unauthenticated players to be hurt.
+  # Default: false
+  # Options: true, false
   noHurt: false
 
-# 数据库配置
+# Database config
 database:
-  # 数据库类型
-  # 默认值：mysql
-  # 可选项：mysql, sqlite
+  # The type of database.
+  # Default: mysql
+  # Options: mysql, sqlite
   type: mysql
 
-  # MySQL 数据库配置
+  # MySQL database config
   mysql:
-    # 数据库地址（数据库在本地时请勿更改）
+    # Database host.
     host: localhost
 
-    # 数据库端口
+    # Database port.
     port: 3306
 
-    # 数据库名称
+    # Database name.
     database: grasslogin
 
-    # 数据库用户名
+    # Database username.
     username: root
 
-    # 数据库密码
+    # Database password.
     password: ""
 
-  # SQLite 数据库配置
+  # SQLite database config
   sqlite:
-    # 数据库文件路径
+    # Path to SQLite database (.db file).
+    # Relative to the directory of the config file.
     path: grasslogin.db
 
-# 加密
-# 修改以下配置项后，玩家需要重新注册。
-# 需要先删除数据库表，然后让玩家重新注册！！！
-# 最好不要修改！！！
-encrypt:
-  # 加密方法
-  # 默认值：SHA-512
-  # 可选项：SHA-1, SHA-256, SHA-512, MD5
+# Encryption
+# After modifying the following configuration items, players need to re-register.
+# Before players re-register, please delete the database table.
+# You'd better not modify this!!!
+encryption:
+  # Encryption method.
+  # Default: SHA-512
+  # Options: SHA-1, SHA-256, SHA-512, MD5
   method: SHA-512
 
-  # 启用加密用户名
-  # 默认值：false
-  # 可选项：true, false
-  username: false
+  # Enable the username encryption.
+  # Default: false
+  # Options: true, false
+  usernameEncryption: false
 
-  # 启用用户名加密失败回退
-  # 当用户名加密失败时，使用明文用户名进行存储。
-  # 默认值：true
-  # 可选项：true, false
-  usernameFallback: true
+  # Enable the username encryption fallback.
+  # When the username encryption fails, GrassLogin plugin use the plaintext username for storage.
+  # Default: true
+  # Options: true, false
+  usernameEncryptionFallback: true
+
+# Localization language.
+# Default: en_us
+# Options: en_us, zh_cn
+language: en_us

@@ -2,18 +2,33 @@ name: GrassLogin
 main: io.github.blockneko11.grasslogin.GrassLoginPlugin
 version: "${version}"
 author: BlockNeko-11
+website: https://github.com/BlockNeko-11/GrassLogin
 api-version: 1.13
 
 commands:
   grasslogin:
+    description: Manage the GrassLogin plugin.
     aliases:
       - gl
     permission: grasslogin.command.grasslogin
+    usage: /grasslogin <reload|help|version>
   login:
+    description: Login your account.
     aliases:
       - l
     permission: grasslogin.command.login
+    usage: /login <password>
   register:
+    description: Register your account.
     aliases:
       - reg
     permission: grasslogin.command.register
+    usage: /register <password> <repeat the password>
+
+permissions:
+  grasslogin.command.grasslogin:
+    default: op
+  grasslogin.command.login:
+    default: true
+  grasslogin.command.register:
+    default: true
