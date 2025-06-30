@@ -57,6 +57,10 @@ processResources {
     filesMatching("plugin.yml") {
         expand "version": project.version
     }
+
+    filesMatching("config.yml") {
+        expand "version": project.version
+    }
 }
 
 idea {
