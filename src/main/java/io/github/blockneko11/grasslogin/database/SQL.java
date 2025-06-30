@@ -3,10 +3,7 @@ package io.github.blockneko11.grasslogin.database;
 import io.github.blockneko11.grasslogin.GrassLoginPlugin;
 import io.github.blockneko11.grasslogin.core.PlayerAuthData;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 public abstract class SQL {
     public abstract void initializeDB() throws SQLException;
@@ -25,7 +22,7 @@ public abstract class SQL {
 
     public void createTable() throws SQLException {
         Connection connection = this.getConnection();
-        PreparedStatement ps = connection.prepareStatement("CREATE TABLE IF NOT EXISTS grasslogin_accounts (name VARCHAR(64) PRIMARY KEY NOT NULL, pwd TEXT NOT NULL, lastLogin TEXT NOT NULL);");
+        PreparedStatement ps = connection.prepareStatement("CREATE TABLE IF NOT EXISTS grasslogin_accounts (name VARCHAR(64) PRIMARY KEY NOT NULL, pwd TEXT NOT NULL);");
         ps.executeUpdate();
         ps.close();
         this.closeConnection();
@@ -33,25 +30,23 @@ public abstract class SQL {
 
     public void insert(PlayerAuthData data) throws SQLException {
         Connection connection = this.getConnection();
-        PreparedStatement ps = connection.prepareStatement("INSERT INTO grasslogin_accounts (name, pwd, lastLogin) VALUES (?, ?, ?);");
+        PreparedStatement ps = connection.prepareStatement("INSERT INTO grasslogin_accounts (name, pwd) VALUES (?, ?);");
         ps.setString(1, data.getName());
         ps.setString(2, data.getPwd());
-        ps.setString(3, data.getLastLogin().toString());
         ps.executeUpdate();
         ps.close();
         this.closeConnection();
     }
 
-//    public void modify(PlayerAuthData data) throws SQLException {
-//        Connection connection = this.getConnection();
-//        PreparedStatement ps = connection.prepareStatement("UPDATE grasslogin_accounts SET pwd = ?, lastLogin = ? WHERE name = ?;");
-//        ps.setString(1, data.getPwd());
-//        ps.setString(2, data.getLastLogin().toString());
-//        ps.setString(3, data.getName());
-//        ps.executeUpdate();
-//        ps.close();
-//        this.closeConnection();
-//    }
+    public void modify(PlayerAuthData data) throws SQLException {
+        Connection connection = this.getConnection();
+        PreparedStatement ps = connection.prepareStatement("UPDATE grasslogin_accounts SET pwd = ? WHERE name = ?;");
+        ps.setString(1, data.getPwd());
+        ps.setString(2, data.getName());
+        ps.executeUpdate();
+        ps.close();
+        this.closeConnection();
+    }
 
     public PlayerAuthData get(String name) throws SQLException {
         Connection connection = this.getConnection();
@@ -64,8 +59,7 @@ public abstract class SQL {
 
         return new PlayerAuthData(
                 rs.getString("name"),
-                rs.getString("pwd"),
-                rs.getDate("last_login")
+                rs.getString("pwd")
         );
     }
 

@@ -1,13 +1,13 @@
 package io.github.blockneko11.grasslogin.core;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 public final class AuthManager {
-    private static final List<String> authedPlayers = new ArrayList<>();
+    private static final Set<String> authedPlayers = ConcurrentHashMap.newKeySet();
 
     public static boolean isAuthed(String playerName) {
-        return authedPlayers.contains(playerName.toLowerCase());
+        return authedPlayers.stream().anyMatch(name -> name.equalsIgnoreCase(playerName));
     }
 
     public static void addAuthed(String playerName) {
@@ -17,6 +17,6 @@ public final class AuthManager {
     }
 
     public static void removeAuthed(String playerName) {
-        authedPlayers.remove(playerName.toLowerCase());
+        authedPlayers.removeIf(name -> name.equalsIgnoreCase(playerName));
     }
 }

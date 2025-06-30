@@ -5,8 +5,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
-import java.util.Date;
-
 @Data
 @AllArgsConstructor
 @ToString(callSuper = false)
@@ -14,5 +12,4 @@ import java.util.Date;
 public final class PlayerAuthData {
     private String name;
     private String pwd;
-    private Date lastLogin;
 }

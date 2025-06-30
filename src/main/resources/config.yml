@@ -46,3 +46,12 @@ database:
   sqlite:
     # 数据库文件路径
     path: grasslogin.db
+
+# 密码加密
+encrypt:
+  # 密码加密方法
+  # 修改后玩家无法登录，需要先删除数据库表，然后让玩家重新注册！！！
+  # 最好不要修改！！！
+  # 默认值：SHA-512
+  # 可选项：SHA-1, SHA-256, SHA-512, MD5
+  method: SHA-512
