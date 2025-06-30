@@ -34,7 +34,7 @@ public final class GrassLoginPlugin extends JavaPlugin {
         saveDefaultConfig();
         pluginConfig = getConfig();
 
-        if (!Objects.equals(pluginConfig.getString("version"), getDescription().getVersion())) {
+        if (!pluginConfig.getString("version", "").equalsIgnoreCase(getDescription().getVersion())) {
             log.severe("GrassLogin 插件版本与配置文件的版本不匹配！");
             log.severe("GrassLogin 插件将禁用。");
             getServer().getPluginManager().disablePlugin(this);
