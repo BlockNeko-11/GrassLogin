@@ -39,7 +39,7 @@ public interface PlayerCommandExecutor extends TabExecutor {
      * @param command 执行的命令
      * @param alias 发送者所使用的命令别名
      * @param args 参数
-     * @return 补全结果（一个 {@link List<String>} 对象）
+     * @return 补全结果（一个 {@link List} 对象）
      */
     @Override
     default List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
