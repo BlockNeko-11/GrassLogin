@@ -11,23 +11,26 @@ commands:
     aliases:
       - gl
     permission: grasslogin.command.grasslogin
-    usage: /grasslogin <reload|help|version>
   login:
     description: Login your account.
     aliases:
       - l
     permission: grasslogin.command.login
-    usage: /login <password>
   register:
     description: Register your account.
     aliases:
       - reg
     permission: grasslogin.command.register
-    usage: /register <password> <repeat the password>
 
 permissions:
   grasslogin.command.grasslogin:
+    default: true
+  grasslogin.command.grasslogin.help:
+    default: true
+  grasslogin.command.grasslogin.reload:
     default: op
+  grasslogin.command.grasslogin.version:
+    default: true
   grasslogin.command.login:
     default: true
   grasslogin.command.register:

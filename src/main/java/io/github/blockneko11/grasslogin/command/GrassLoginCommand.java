@@ -28,42 +28,46 @@ public final class GrassLoginCommand implements TabExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (this.reload(sender, args) ||
-                this.help(sender, args) ||
-                this.version(sender, args)) {
-            return true;
-        }
-
-        printHelp(sender);
-        return false;
-    }
-
-    private boolean reload(CommandSender sender, String[] args) {
-        if (args.length == 1 && args[0].equalsIgnoreCase("reload")) {
-            GrassLoginPlugin.getInstance().reload();
-            sender.sendMessage(Translation.tr("command.grasslogin.reload"));
-            return true;
-        }
-
-        return false;
-    }
-
-    private boolean help(CommandSender sender, String[] args) {
-        if (args.length == 1 && args[0].equalsIgnoreCase("help")) {
+        if (args.length != 1) {
             printHelp(sender);
-            return true;
+            return false;
         }
 
-        return false;
-    }
+        switch (args[0].toLowerCase()) {
+            case "reload": {
+                if (!sender.hasPermission("grasslogin.command.grasslogin.reload")) {
+                    sender.sendMessage(Translation.tr("command.no_permission"));
+                    return false;
+                }
 
-    private boolean version(CommandSender sender, String[] args) {
-        if (args.length == 1 && args[0].equalsIgnoreCase("version")) {
-            sender.sendMessage(Translation.tr("command.grasslogin.version", GrassLoginPlugin.getInstance().getDescription().getVersion()));
-            return true;
+                GrassLoginPlugin.getInstance().reload();
+                break;
+            }
+            case "help": {
+                if (!sender.hasPermission("grasslogin.command.grasslogin.help")) {
+                    sender.sendMessage(Translation.tr("command.no_permission"));
+                    return false;
+                }
+
+                printHelp(sender);
+                break;
+            }
+            case "version": {
+                if (!sender.hasPermission("grasslogin.command.grasslogin.version")) {
+                    sender.sendMessage(Translation.tr("command.no_permission"));
+                    return false;
+                }
+
+                sender.sendMessage(Translation.tr("command.grasslogin.version", GrassLoginPlugin.getInstance().getDescription().getVersion()));
+                break;
+            }
+            default: {
+                printHelp(sender);
+                break;
+            }
         }
 
-        return false;
+        return true;
     }
 
     @Override

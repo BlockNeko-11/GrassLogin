@@ -7,7 +7,8 @@
   "database.connect_failed": "数据库连接失败：{}",
   "database.init_failed": "数据库初始化失败：{}",
 
-  "command.only_player_can_use": "Consol 也想当一回 Player¿",
+  "command.only_player_can_use": "&cConsol 也想当一回 Player 吗¿",
+  "command.no_permission": "&c你没权限做这个！",
 
   "command.grasslogin.help.header": "GrassLogin 插件帮助：",
   "command.grasslogin.help.0": "&e/grasslogin help &7- 显示本信息",
