@@ -10,29 +10,47 @@ import java.util.Arrays;
 import java.util.List;
 
 public final class GrassLoginCommand implements TabExecutor {
-    @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-//        return this.reload(sender, args) ||
-          return      this.help(sender, args) ||
-                this.version(sender, args);
+    private static final List<String> helpMessages = Arrays.asList(
+            "GrassLogin 插件帮助：",
+            "/grasslogin reloadConfig - 重载插件配置文件",
+            "/grasslogin help - 显示本信息",
+            "/grasslogin version - 显示版本",
+            "/l(ogin) 密码 - 登录",
+            "/reg(ister) 密码 - 注册",
+            "更多帮助信息请查看插件仓库：https://github.com/BlockNeko-11/GrassLogin"
+    );
+
+    private static void printHelp(CommandSender sender) {
+        for (String message : helpMessages) {
+            sender.sendMessage(message);
+        }
     }
 
-//    private boolean reload(CommandSender sender, String[] args) {
-//        if (args.length == 1 && args[0].equalsIgnoreCase("reload")) {
-//            GrassLoginPlugin.getInstance().reload();
-//            sender.sendMessage("GrassLogin 插件重载完成。");
-//            return true;
-//        }
-//
-//        return false;
-//    }
+    @Override
+    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+        if (this.reloadConfig(sender, args) ||
+                this.help(sender, args) ||
+                this.version(sender, args)) {
+            return true;
+        }
+
+        printHelp(sender);
+        return false;
+    }
+
+    private boolean reloadConfig(CommandSender sender, String[] args) {
+        if (args.length == 1 && args[0].equalsIgnoreCase("reloadconfig")) {
+            GrassLoginPlugin.getInstance().reload();
+            sender.sendMessage("GrassLogin 插件配置文件重载完成。");
+            return true;
+        }
+
+        return false;
+    }
 
     private boolean help(CommandSender sender, String[] args) {
         if (args.length == 1 && args[0].equalsIgnoreCase("help")) {
-            sender.sendMessage("GrassLogin 插件帮助：");
-//            sender.sendMessage("/grasslogin reload - 重载插件");
-            sender.sendMessage("/grasslogin help - 显示帮助");
-            sender.sendMessage("/grasslogin version - 显示版本");
+            printHelp(sender);
             return true;
         }
 
@@ -51,7 +69,7 @@ public final class GrassLoginCommand implements TabExecutor {
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
         if (args.length == 1) {
-            return Arrays.asList("help", "version");
+            return Arrays.asList("reloadconfig", "help", "version");
         }
 
         return new ArrayList<>();

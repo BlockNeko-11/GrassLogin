@@ -14,6 +14,7 @@ public interface PlayerCommandExecutor extends TabExecutor {
     @Override
     default boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!(sender instanceof Player)) {
+            sender.sendMessage("Consol 也想当一回 Player¿");
             return false;
         }
 

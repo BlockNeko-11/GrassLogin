@@ -60,3 +60,14 @@ encrypt:
   # 默认值：SHA-512
   # 可选项：SHA-1, SHA-256, SHA-512, MD5
   method: SHA-512
+
+  # 启用加密用户名
+  # 默认值：false
+  # 可选项：true, false
+  username: false
+
+  # 启用用户名加密失败回退
+  # 当用户名加密失败时，使用明文用户名进行存储。
+  # 默认值：true
+  # 可选项：true, false
+  usernameFallback: true
