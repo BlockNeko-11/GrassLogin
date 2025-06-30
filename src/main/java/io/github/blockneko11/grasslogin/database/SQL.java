@@ -73,7 +73,7 @@ public abstract class SQL {
 //    }
 
     public static SQL create() {
-        switch (GrassLoginPlugin.getPluginConfig().getString("database.type")) {
+        switch (GrassLoginPlugin.getPluginConfig().getString("database.type", "mysql").toLowerCase()) {
             case "mysql": return new MySQL();
             case "sqlite": return new SQLite();
             default: throw new IllegalArgumentException("Invalid database type");

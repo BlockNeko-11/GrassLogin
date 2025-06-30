@@ -4,6 +4,7 @@ import io.github.blockneko11.grasslogin.GrassLoginPlugin;
 import io.github.blockneko11.grasslogin.core.AuthManager;
 import io.github.blockneko11.grasslogin.core.PlayerAuthData;
 import io.github.blockneko11.grasslogin.util.CryptUtil;
+import io.github.blockneko11.grasslogin.util.Translation;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -17,12 +18,12 @@ public final class LoginCommand implements PlayerCommandExecutor {
     @Override
     public boolean onCommand(Player player, String[] args) {
         if (AuthManager.isAuthed(player.getName())) {
-            player.sendMessage("§c你已经登录过了！");
+            player.sendMessage(Translation.tr("command.login.already_authed"));
             return false;
         }
 
         if (args.length == 0) {
-            player.sendMessage("§c请输入密码！");
+            player.sendMessage(Translation.tr("command.login.no_password"));
             return false;
         }
 
@@ -31,21 +32,21 @@ public final class LoginCommand implements PlayerCommandExecutor {
                 PlayerAuthData data = GrassLoginPlugin.getSql().get(player.getName());
 
                 if (data == null) {
-                    player.sendMessage("§c你还未注册呢！");
+                    player.sendMessage(Translation.tr("command.login.not_registered"));
                     return;
                 }
 
                 if (Objects.equals(CryptUtil.encrypt(args[0]), data.getPwd().trim())) {
                     AuthManager.addAuthed(player.getName());
-                    player.sendMessage("§a登录成功！");
-                    GrassLoginPlugin.getLog().info("玩家 " + player.getName() + " 登录成功！");
+                    player.sendMessage(Translation.tr("command.login.success"));
+                    GrassLoginPlugin.getLog().info(Translation.tr("command.login.success_log", player.getName()));
                 } else {
-                    player.sendMessage("§c密码错误！");
+                    player.sendMessage(Translation.tr("command.login.wrong_password"));
                 }
 
             } catch (SQLException e) {
-                player.sendMessage("§c登录失败，请询问腐竹！");
-                GrassLoginPlugin.getLog().severe("玩家 " + player.getName() + " 登录失败：" + e);
+                player.sendMessage(Translation.tr("command.login.internal_error"));
+                GrassLoginPlugin.getLog().severe(Translation.tr("command.login.internal_error_log", player.getName(), e));
             }
         });
         return true;
@@ -54,7 +55,7 @@ public final class LoginCommand implements PlayerCommandExecutor {
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
         if (args.length == 1) {
-            return Collections.singletonList("密码");
+            return Collections.singletonList(Translation.tr("command.login.tab_complete.password"));
         }
 
         return Collections.emptyList();
