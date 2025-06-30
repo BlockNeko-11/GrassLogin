@@ -5,6 +5,7 @@ import io.github.blockneko11.grasslogin.command.LoginCommand;
 import io.github.blockneko11.grasslogin.command.RegisterCommand;
 import io.github.blockneko11.grasslogin.database.SQL;
 import io.github.blockneko11.grasslogin.listener.PlayerEventsListener;
+import io.github.blockneko11.grasslogin.schedule.Tasks;
 import io.github.blockneko11.grasslogin.util.Translation;
 import lombok.Getter;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -59,6 +60,8 @@ public final class GrassLoginPlugin extends JavaPlugin {
             return;
         }
 
+        Tasks.runAll();
+
         log.info(Translation.tr("plugin.enabled"));
     }
 
@@ -71,8 +74,12 @@ public final class GrassLoginPlugin extends JavaPlugin {
         instance = null;
         log = null;
         pluginConfig = null;
-        scheduler = null;
+
+        Tasks.cancelAll();
+
         sql = null;
+        scheduler = null;
+
         Translation.shutdown();
     }
 
@@ -104,9 +111,13 @@ public final class GrassLoginPlugin extends JavaPlugin {
         saveConfig();
         reloadConfig();
 
+        Tasks.cancelAll();
+
         if (!this.connectDB()) {
             return;
         }
+
+        Tasks.runAll();
 
         log.info(Translation.tr("plugin.reloaded"));
     }

@@ -22,7 +22,7 @@ public final class PlayerEventsListener implements Listener {
     // join & quit
 
     @EventHandler
-    public void onPlayerJoin(AsyncPlayerPreLoginEvent e) {
+    public void onPlayerLogin(AsyncPlayerPreLoginEvent e) {
         String playerName = e.getName();
         if (!playerName.matches("^\\w+$")) {
             e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, "Player whose name only includes letters, numbers and underlines can join the server.");
