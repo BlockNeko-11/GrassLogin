@@ -11,7 +11,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitScheduler;
 
 import java.sql.SQLException;
-import java.util.Objects;
 import java.util.logging.Logger;
 
 public final class GrassLoginPlugin extends JavaPlugin {
@@ -53,22 +52,7 @@ public final class GrassLoginPlugin extends JavaPlugin {
 
         scheduler = getServer().getScheduler();
 
-        sql = SQL.create();
-        try {
-            sql.initializeDB();
-        } catch (SQLException e) {
-            log.severe("数据库连接失败：" + e);
-            log.severe("GrassLogin 插件将禁用。");
-            getServer().getPluginManager().disablePlugin(this);
-            return;
-        }
-
-        try {
-            sql.createTable();
-        } catch (SQLException e) {
-            log.severe("数据库表创建失败：" + e);
-            log.severe("GrassLogin 插件将禁用。");
-            getServer().getPluginManager().disablePlugin(this);
+        if (!this.connectDB()) {
             return;
         }
 
@@ -88,10 +72,38 @@ public final class GrassLoginPlugin extends JavaPlugin {
         sql = null;
     }
 
-//    public void reload() {
-//        saveConfig();
-//        reloadConfig();
-//
-//        log.info("GrassLogin plugin reloaded!");
-//    }
+    private boolean connectDB() {
+        sql = SQL.create();
+
+        try {
+            sql.initializeDB();
+        } catch (SQLException e) {
+            log.severe("数据库连接失败：" + e);
+            log.severe("GrassLogin 插件将禁用。");
+            getServer().getPluginManager().disablePlugin(this);
+            return false;
+        }
+
+        try {
+            sql.createTable();
+        } catch (SQLException e) {
+            log.severe("数据库表创建失败：" + e);
+            log.severe("GrassLogin 插件将禁用。");
+            getServer().getPluginManager().disablePlugin(this);
+            return false;
+        }
+
+        return true;
+    }
+
+    public void reload() {
+        saveConfig();
+        reloadConfig();
+
+        if (!this.connectDB()) {
+            return;
+        }
+
+        log.info("GrassLogin 插件配置文件重载完成！");
+    }
 }
