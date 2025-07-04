@@ -7,6 +7,8 @@
   "database.connect_failed": "Failed to connect to database: {}",
   "database.init_failed": "Failed to initialize database: {}",
 
+  "message.not_authed": "&cYou haven't logon or registered yet.",
+
   "command.only_player_can_use": "&cHey, are u a player¿",
   "command.no_permission": "&cYou don't have permission to do this!",
 

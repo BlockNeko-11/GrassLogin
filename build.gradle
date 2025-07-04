@@ -78,6 +78,14 @@ java {
     withJavadocJar()
 }
 
+jar {
+    from("LICENSE")
+}
+
+javadoc {
+    failOnError = false
+}
+
 tasks.withType(JavaCompile).configureEach {
     options.encoding = "UTF-8"
 }
