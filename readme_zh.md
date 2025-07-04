@@ -30,7 +30,7 @@ Folia 核心（及其下游和分支）现在用不了 GrassLogin（以后会的
 
 [最新构建版](https://github.com/BlockNeko-11/GrassLogin/actions?query=event:push+branch:dev)
 
-**⚠警告：最新构建版极其不稳定，使用之前记得先备份。**
+**警告：最新构建版极其不稳定，使用之前记得先备份。**
 
 ## 安装
 1. 下载插件。

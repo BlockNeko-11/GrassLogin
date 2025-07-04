@@ -28,7 +28,7 @@ Folia (and its downstream and forks) is not supported now (will support in the f
 
 [Latest Build](https://github.com/BlockNeko-11/GrassLogin/actions?query=event:push+branch:dev)
 
-**⚠CAUTION: Latest build may include incompatible or breaking changes, so please make backup before using the latest build.**
+**CAUTION: Latest build may include incompatible or breaking changes, so please make backup before using the latest build.**
 
 ## Installation
 1. Download the plugin.
