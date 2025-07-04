@@ -25,7 +25,7 @@ Folia 核心（及其下游和分支）现在用不了 GrassLogin（以后会的
 - 邮箱验证
 - BC 端，Velocity 端的跨服支持
 
-## Download
+## 下载
 [最新正式版](https://github.com/BlockNeko-11/GrassLogin/releases/latest)
 
 [最新构建版](https://github.com/BlockNeko-11/GrassLogin/actions?query=event:push+branch:dev)
