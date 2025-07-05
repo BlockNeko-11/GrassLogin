@@ -6,6 +6,7 @@
   "config.version_mismatch": "The version of config.yml doesn't match with GrassLogin plugin's version",
   "database.connect_failed": "Failed to connect to database: {}",
   "database.init_failed": "Failed to initialize database: {}",
+  "database.invalid_type": "Invalid database type: {}",
 
   "message.not_authed": "&cYou haven't logon or registered yet.",
 

@@ -22,6 +22,10 @@ repositories {
         name = "Sonatype"
         url = "https://oss.sonatype.org/content/repositories/snapshots/"
     }
+    maven {
+        name = "Jitpack"
+        url = "https://jitpack.io/"
+    }
     mavenCentral()
 }
 
@@ -30,6 +34,9 @@ dependencies {
 
     compileOnly "mysql:mysql-connector-java:8.0.33"
     compileOnly "org.xerial:sqlite-jdbc:3.50.1.0"
+    api "com.github.BlockNeko-11.SimpleDBC:simpledbc-api:1.0.2"
+    api "com.github.BlockNeko-11.SimpleDBC:simpledbc-mysql:1.0.2"
+    api "com.github.BlockNeko-11.SimpleDBC:simpledbc-sqlite:1.0.2"
 
     compileOnly "commons-codec:commons-codec:1.18.0"
 

@@ -6,8 +6,9 @@
   "config.version_mismatch": "GrassLogin 插件版本与配置文件的版本不匹配！",
   "database.connect_failed": "数据库连接失败：{}",
   "database.init_failed": "数据库初始化失败：{}",
+  "database.invalid_type": "未知数据库类型：{}",
 
-  "message.not_authed": "\"&c你还没有登录/注册呢！",
+  "message.not_authed": "&c你还没有登录/注册呢！",
 
   "command.only_player_can_use": "&cConsol 也想当一回 Player 吗¿",
   "command.no_permission": "&c你没权限做这个！",

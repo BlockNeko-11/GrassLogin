@@ -4,6 +4,8 @@ version: "${version}"
 author: BlockNeko-11
 website: https://github.com/BlockNeko-11/GrassLogin
 api-version: 1.13
+depend:
+  - SimpleDBC
 
 commands:
   grasslogin:

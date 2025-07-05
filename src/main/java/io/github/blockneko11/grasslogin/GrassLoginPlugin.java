@@ -7,6 +7,9 @@ import io.github.blockneko11.grasslogin.database.SQL;
 import io.github.blockneko11.grasslogin.listener.PlayerEventsListener;
 import io.github.blockneko11.grasslogin.schedule.Tasks;
 import io.github.blockneko11.grasslogin.util.Translation;
+import io.github.blockneko11.simpledbc.api.Database;
+import io.github.blockneko11.simpledbc.impl.MySQLDatabaseImpl;
+import io.github.blockneko11.simpledbc.impl.SQLiteDatabaseImpl;
 import lombok.Getter;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -84,11 +87,35 @@ public final class GrassLoginPlugin extends JavaPlugin {
     }
 
     private boolean connectDB() {
-        sql = SQL.create();
+        String type = pluginConfig.getString("database.type");
+        Database database;
+        switch (type.toLowerCase()) {
+            case "mysql": {
+                String host = pluginConfig.getString("database.mysql.host");
+                String port = pluginConfig.getString("database.mysql.port");
+                String username = pluginConfig.getString("database.mysql.username");
+                String password = pluginConfig.getString("database.mysql.password");
+                String databaseName = pluginConfig.getString("database.mysql.database");
+                database = new MySQLDatabaseImpl(host + ":" + port, username, password, databaseName);
+                break;
+            }
+            case "sqlite": {
+                database = new SQLiteDatabaseImpl(pluginConfig.getString("database.sqlite.path"));
+                break;
+            }
+            default: {
+                log.severe(Translation.tr("database.invalid_type", type));
+                log.severe(Translation.tr("error.process.disable"));
+                getServer().getPluginManager().disablePlugin(this);
+                return false;
+            }
+        }
+
+        sql = new SQL(database);
 
         try {
             sql.initializeDB();
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             log.severe(Translation.tr("database.connect_failed", e));
             log.severe(Translation.tr("error.process.disable"));
             getServer().getPluginManager().disablePlugin(this);
