@@ -8,8 +8,8 @@ import io.github.blockneko11.grasslogin.listener.PlayerEventsListener;
 import io.github.blockneko11.grasslogin.schedule.Tasks;
 import io.github.blockneko11.grasslogin.util.Translation;
 import io.github.blockneko11.simpledbc.api.Database;
-import io.github.blockneko11.simpledbc.impl.MySQLDatabaseImpl;
-import io.github.blockneko11.simpledbc.impl.SQLiteDatabaseImpl;
+import io.github.blockneko11.simpledbc.impl.MySQLDatabase;
+import io.github.blockneko11.simpledbc.impl.SQLiteDatabase;
 import lombok.Getter;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -39,13 +39,6 @@ public final class GrassLoginPlugin extends JavaPlugin {
         pluginConfig = getConfig();
 
         Translation.load();
-
-        if (!pluginConfig.getString("version", "").equalsIgnoreCase(getDescription().getVersion())) {
-            log.severe(Translation.tr("config.version_mismatch"));
-            log.severe(Translation.tr("error.process.disable"));
-            getServer().getPluginManager().disablePlugin(this);
-            return;
-        }
 
         getServer().getPluginManager().registerEvents(new PlayerEventsListener(), this);
 
@@ -96,11 +89,11 @@ public final class GrassLoginPlugin extends JavaPlugin {
                 String username = pluginConfig.getString("database.mysql.username");
                 String password = pluginConfig.getString("database.mysql.password");
                 String databaseName = pluginConfig.getString("database.mysql.database");
-                database = new MySQLDatabaseImpl(host + ":" + port, username, password, databaseName);
+                database = new MySQLDatabase(host + ":" + port, username, password, databaseName);
                 break;
             }
             case "sqlite": {
-                database = new SQLiteDatabaseImpl(pluginConfig.getString("database.sqlite.path"));
+                database = new SQLiteDatabase(pluginConfig.getString("database.sqlite.path"));
                 break;
             }
             default: {

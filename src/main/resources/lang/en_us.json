@@ -3,7 +3,6 @@
   "plugin.disabled": "GrassLogin plugin was disabled!",
   "plugin.reloaded": "GrassLogin plugin was reloaded!",
   "error.process.disable": "GrassLogin will be disabled.",
-  "config.version_mismatch": "The version of config.yml doesn't match with GrassLogin plugin's version",
   "database.connect_failed": "Failed to connect to database: {}",
   "database.init_failed": "Failed to initialize database: {}",
   "database.invalid_type": "Invalid database type: {}",

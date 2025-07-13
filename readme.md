@@ -3,8 +3,6 @@ English | [中文](./readme_zh.md)
 # GrassLogin
 A simple bukkit authentication plugin for Minecraft servers.
 
-Current version: 1.0.0
-
 ## Support
 GrassLogin plugin should support Minecraft 1.13+ in theory.
 

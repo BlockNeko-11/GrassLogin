@@ -2,6 +2,7 @@ plugins {
     id "idea"
     id "java-library"
     id "maven-publish"
+    id "com.github.johnrengelman.shadow" version "8.1.1"
 }
 
 group = rootProject.maven_group
@@ -34,38 +35,21 @@ dependencies {
 
     compileOnly "mysql:mysql-connector-java:8.0.33"
     compileOnly "org.xerial:sqlite-jdbc:3.50.1.0"
-    api "com.github.BlockNeko-11.SimpleDBC:simpledbc-api:1.0.2"
-    api "com.github.BlockNeko-11.SimpleDBC:simpledbc-mysql:1.0.2"
-    api "com.github.BlockNeko-11.SimpleDBC:simpledbc-sqlite:1.0.2"
+
+    shadow(api("com.github.BlockNeko-11.SimpleDBC:simpledbc-api:1.1.3"))
+    shadow(compileOnly("com.github.BlockNeko-11.SimpleDBC:simpledbc-mysql:1.1.3"))
+    shadow(compileOnly("com.github.BlockNeko-11.SimpleDBC:simpledbc-sqlite:1.1.3"))
 
     compileOnly "commons-codec:commons-codec:1.18.0"
 
     compileOnly "org.jetbrains:annotations:26.0.2"
     annotationProcessor(compileOnly("org.projectlombok:lombok:1.18.36"))
-
-    testImplementation platform('org.junit:junit-bom:5.11.4')
-    testImplementation 'org.junit.jupiter:junit-jupiter'
-}
-
-test {
-    useJUnitPlatform()
-
-    ignoreFailures true
-
-    testLogging {
-        exceptionFormat = "full"
-        events "passed", "skipped", "failed"
-    }
 }
 
 processResources {
     inputs.property "version", project.version
 
     filesMatching("plugin.yml") {
-        expand "version": project.version
-    }
-
-    filesMatching("config.yml") {
         expand "version": project.version
     }
 }
@@ -82,22 +66,13 @@ java {
     targetCompatibility = JavaVersion.VERSION_1_8
 
     withSourcesJar()
-    withJavadocJar()
 }
 
 jar {
     from("LICENSE")
 }
 
-javadoc {
-    failOnError = false
-}
-
 tasks.withType(JavaCompile).configureEach {
-    options.encoding = "UTF-8"
-}
-
-tasks.withType(Javadoc).configureEach {
     options.encoding = "UTF-8"
 }
 
@@ -106,6 +81,14 @@ tasks.withType(Test).configureEach { tsk ->
 }
 
 compileJava.dependsOn clean
+
+shadowJar {
+    archiveClassifier.set "shaded"
+    configurations = [project.configurations.shadow]
+    relocate "io.github.blockneko11.simpledbc", "io.github.blockneko11.grasslogin.lib.simpledbc"
+}
+
+build.finalizedBy shadowJar
 
 publishing {
     publications {

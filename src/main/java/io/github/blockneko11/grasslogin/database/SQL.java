@@ -2,8 +2,10 @@ package io.github.blockneko11.grasslogin.database;
 
 import io.github.blockneko11.grasslogin.core.PlayerAuthData;
 import io.github.blockneko11.simpledbc.api.Database;
+import io.github.blockneko11.simpledbc.api.action.table.Attribute;
 
-import java.sql.*;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 /**
  * 数据库工具类。
@@ -20,7 +22,7 @@ public final class SQL {
      * @throws SQLException 连接数据库时抛出的异常。
      */
     public void initializeDB() throws SQLException, ClassNotFoundException {
-        database.connect();
+        this.database.connect();
     }
 
     /**
@@ -28,7 +30,21 @@ public final class SQL {
      * @throws SQLException 创建数据库表时抛出的异常。
      */
     public void createTable() throws SQLException {
-        this.database.execute("CREATE TABLE IF NOT EXISTS grasslogin_accounts (name VARCHAR(64) PRIMARY KEY NOT NULL, pwd TEXT NOT NULL);");
+//        this.database.update("CREATE TABLE IF NOT EXISTS grasslogin_accounts (name VARCHAR(64) PRIMARY KEY NOT NULL, pwd TEXT NOT NULL);");
+//        this.database.createTable(Table.builder("grasslogin_accounts")
+//                .column(Column.builder("name", "VARCHAR(64)")
+//                        .addFeature(Column.Feature.PRIMARY_KEY)
+//                        .addFeature(Column.Feature.NOT_NULL)
+//                        .build())
+//                .column(Column.builder("pwd", "TEXT")
+//                        .addFeature(Column.Feature.NOT_NULL)
+//                        .build())
+//                .build());
+
+        this.database.createTable("grasslogin_accounts")
+                .column("name", "VARCHAR(64)", Attribute.PRIMARY_KEY, Attribute.NOT_NULL)
+                .column("pwd", "TEXT", Attribute.NOT_NULL)
+                .execute();
     }
 
     /**
@@ -37,11 +53,15 @@ public final class SQL {
      * @throws SQLException 插入数据时抛出的异常。
      */
     public void insert(PlayerAuthData data) throws SQLException {
-        this.database.execute(
-                "INSERT INTO grasslogin_accounts (name, pwd) VALUES (?, ?);",
-                data.getName(),
-                data.getPwd()
-        );
+//        this.database.update(
+//                "INSERT INTO grasslogin_accounts (name, pwd) VALUES (?, ?);",
+//                data.getName(),
+//                data.getPwd()
+//        );
+        this.database.columnInsert("grasslogin_accounts")
+                .value("name", data.getName())
+                .value("pwd", data.getPwd())
+                .execute();
     }
 
     /**
@@ -64,18 +84,29 @@ public final class SQL {
      * @throws SQLException 获取数据时抛出的异常。
      */
     public PlayerAuthData get(String name) throws SQLException {
-        Connection connection = this.database.getConnection();
-        PreparedStatement ps = connection.prepareStatement("SELECT * FROM grasslogin_accounts WHERE name = ?;");
-        ps.setString(1, name);
-        ResultSet rs = ps.executeQuery();
-        if (!rs.next()) {
-            return null;
-        }
+//        Connection connection = this.database.getConnection();
+//        PreparedStatement ps = connection.prepareStatement("SELECT * FROM grasslogin_accounts WHERE name = ?;");
+//        ps.setString(1, name);
+//        ResultSet rs = ps.executeQuery();
+//        if (!rs.next()) {
+//            return null;
+//        }
+//
+//        return new PlayerAuthData(
+//                rs.getString("name"),
+//                rs.getString("pwd")
+//        );
 
-        return new PlayerAuthData(
-                rs.getString("name"),
-                rs.getString("pwd")
-        );
+        try (ResultSet rs = this.database.query("SELECT * FROM grasslogin_accounts WHERE name = ?;", name)) {
+            if (!rs.next()) {
+                return null;
+            }
+
+            return new PlayerAuthData(
+                    rs.getString("name"),
+                    rs.getString("pwd")
+            );
+        }
     }
 
 //    public void delete(String name) throws SQLException {
