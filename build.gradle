@@ -43,7 +43,7 @@ dependencies {
     compileOnly "commons-codec:commons-codec:1.18.0"
 
     compileOnly "org.jetbrains:annotations:26.0.2"
-    annotationProcessor(compileOnly("org.projectlombok:lombok:1.18.36"))
+    annotationProcessor(compileOnly("org.projectlombok:lombok:1.18.38"))
 }
 
 processResources {
