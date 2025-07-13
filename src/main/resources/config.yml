@@ -1,10 +1,6 @@
 # GrassLogin plugin config file
 # For more information, please visit the repository of GrassLogin plugin: https://github.com/BlockNeko-11/GrassLogin.
 
-# The config version, which should be the same as the plugin version.
-# When the version does not match, the plugin will not be enabled.
-version: "${version}"
-
 # Unauthenticated players' behaviour config
 unAuthed:
   # The commands that can be executed by unauthenticated players.

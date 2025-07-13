@@ -1,39 +1,28 @@
 package io.github.blockneko11.grasslogin.database;
 
-import io.github.blockneko11.grasslogin.GrassLoginPlugin;
 import io.github.blockneko11.grasslogin.core.PlayerAuthData;
+import io.github.blockneko11.simpledbc.api.Database;
+import io.github.blockneko11.simpledbc.api.action.table.Attribute;
 
-import java.sql.*;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 /**
- * 数据库抽象类。
+ * 数据库工具类。
  */
-public abstract class SQL {
+public final class SQL {
+    private final Database database;
+
+    public SQL(Database database) {
+        this.database = database;
+    }
+
     /**
      * 初始化数据库。
      * @throws SQLException 连接数据库时抛出的异常。
      */
-    public abstract void initializeDB() throws SQLException;
-
-    /**
-     * 获取数据库连接。
-     * @return 数据库连接。
-     * @throws SQLException 创建数据库连接时抛出的异常。
-     */
-    public abstract Connection getConnection() throws SQLException;
-
-    /**
-     * 关闭数据库连接。
-     * @throws SQLException 关闭数据库连接时抛出的异常。
-     */
-    public void closeConnection() throws SQLException {
-        Connection connection = this.getConnection();
-
-        if (connection == null || connection.isClosed()) {
-            return;
-        }
-
-        connection.close();
+    public void initializeDB() throws SQLException, ClassNotFoundException {
+        this.database.connect();
     }
 
     /**
@@ -41,11 +30,21 @@ public abstract class SQL {
      * @throws SQLException 创建数据库表时抛出的异常。
      */
     public void createTable() throws SQLException {
-        Connection connection = this.getConnection();
-        PreparedStatement ps = connection.prepareStatement("CREATE TABLE IF NOT EXISTS grasslogin_accounts (name VARCHAR(64) PRIMARY KEY NOT NULL, pwd TEXT NOT NULL);");
-        ps.executeUpdate();
-        ps.close();
-        this.closeConnection();
+//        this.database.update("CREATE TABLE IF NOT EXISTS grasslogin_accounts (name VARCHAR(64) PRIMARY KEY NOT NULL, pwd TEXT NOT NULL);");
+//        this.database.createTable(Table.builder("grasslogin_accounts")
+//                .column(Column.builder("name", "VARCHAR(64)")
+//                        .addFeature(Column.Feature.PRIMARY_KEY)
+//                        .addFeature(Column.Feature.NOT_NULL)
+//                        .build())
+//                .column(Column.builder("pwd", "TEXT")
+//                        .addFeature(Column.Feature.NOT_NULL)
+//                        .build())
+//                .build());
+
+        this.database.createTable("grasslogin_accounts")
+                .column("name", "VARCHAR(64)", Attribute.PRIMARY_KEY, Attribute.NOT_NULL)
+                .column("pwd", "TEXT", Attribute.NOT_NULL)
+                .execute();
     }
 
     /**
@@ -54,13 +53,15 @@ public abstract class SQL {
      * @throws SQLException 插入数据时抛出的异常。
      */
     public void insert(PlayerAuthData data) throws SQLException {
-        Connection connection = this.getConnection();
-        PreparedStatement ps = connection.prepareStatement("INSERT INTO grasslogin_accounts (name, pwd) VALUES (?, ?);");
-        ps.setString(1, data.getName());
-        ps.setString(2, data.getPwd());
-        ps.executeUpdate();
-        ps.close();
-        this.closeConnection();
+//        this.database.update(
+//                "INSERT INTO grasslogin_accounts (name, pwd) VALUES (?, ?);",
+//                data.getName(),
+//                data.getPwd()
+//        );
+        this.database.columnInsert("grasslogin_accounts")
+                .value("name", data.getName())
+                .value("pwd", data.getPwd())
+                .execute();
     }
 
     /**
@@ -69,13 +70,11 @@ public abstract class SQL {
      * @throws SQLException 修改数据时抛出的异常。
      */
     public void modify(PlayerAuthData data) throws SQLException {
-        Connection connection = this.getConnection();
-        PreparedStatement ps = connection.prepareStatement("UPDATE grasslogin_accounts SET pwd = ? WHERE name = ?;");
-        ps.setString(1, data.getPwd());
-        ps.setString(2, data.getName());
-        ps.executeUpdate();
-        ps.close();
-        this.closeConnection();
+        this.database.execute(
+                "UPDATE grasslogin_accounts SET pwd = ? WHERE name = ?;",
+                data.getPwd(),
+                data.getName()
+        );
     }
 
     /**
@@ -85,18 +84,29 @@ public abstract class SQL {
      * @throws SQLException 获取数据时抛出的异常。
      */
     public PlayerAuthData get(String name) throws SQLException {
-        Connection connection = this.getConnection();
-        PreparedStatement ps = connection.prepareStatement("SELECT * FROM grasslogin_accounts WHERE name = ?;");
-        ps.setString(1, name);
-        ResultSet rs = ps.executeQuery();
-        if (!rs.next()) {
-            return null;
-        }
+//        Connection connection = this.database.getConnection();
+//        PreparedStatement ps = connection.prepareStatement("SELECT * FROM grasslogin_accounts WHERE name = ?;");
+//        ps.setString(1, name);
+//        ResultSet rs = ps.executeQuery();
+//        if (!rs.next()) {
+//            return null;
+//        }
+//
+//        return new PlayerAuthData(
+//                rs.getString("name"),
+//                rs.getString("pwd")
+//        );
 
-        return new PlayerAuthData(
-                rs.getString("name"),
-                rs.getString("pwd")
-        );
+        try (ResultSet rs = this.database.query("SELECT * FROM grasslogin_accounts WHERE name = ?;", name)) {
+            if (!rs.next()) {
+                return null;
+            }
+
+            return new PlayerAuthData(
+                    rs.getString("name"),
+                    rs.getString("pwd")
+            );
+        }
     }
 
 //    public void delete(String name) throws SQLException {
@@ -107,16 +117,4 @@ public abstract class SQL {
 //        ps.close();
 //        connection.close();
 //    }
-
-    /**
-     * 根据配置文件指定的数据库类型，创建 {@link SQL} 对象。
-     * @return {@link SQL} 对象
-     */
-    public static SQL create() {
-        switch (GrassLoginPlugin.getPluginConfig().getString("database.type", "mysql").toLowerCase()) {
-            case "mysql": return new MySQL();
-            case "sqlite": return new SQLite();
-            default: throw new IllegalArgumentException("Invalid database type");
-        }
-    }
 }

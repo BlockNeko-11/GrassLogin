@@ -4,5 +4,11 @@
     "config:recommended"
   ],
   "prHourlyLimit": 10,
-  "baseBranches": ["dev"]
+  "baseBranches": ["dev"],
+  "packageRules": [
+    {
+      "matchPackageNames": ["org.spigotmc"],
+      "allowedVersions": "!*"
+    }
+  ]
 }
