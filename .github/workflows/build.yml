@@ -60,7 +60,7 @@ jobs:
 
       - name: create github release
         if: github.repository_owner == 'BlockNeko-11' && github.ref == 'refs/heads/main'
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v3
         with:
           name: "${{ steps.prop_info.outputs.artifact_version }}"
           tag_name: "${{ steps.prop_info.outputs.artifact_version }}"
